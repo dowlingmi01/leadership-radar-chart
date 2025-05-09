@@ -33,11 +33,16 @@
       padding: 10px;
     }
     .slider-group {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
     label {
       color: #333333;
       font-weight: bold;
+    }
+    .description {
+      font-size: 0.9em;
+      color: #555;
+      margin-bottom: 5px;
     }
     input[type=range] {
       width: 100%;
@@ -47,7 +52,7 @@
 </head>
 <body>
   <header>
-    <img src="https://dowpig440.wordpress.com/wp-content/uploads/2025/05/the-collective-rise-logo-rgb_full-color-dark.png" alt="The Collective Rise Logo">
+    <img src="https://dowpig440.wordpress.com/wp-content/uploads/2025/04/workinglogo3.png?w=1024" alt="The Collective Rise Logo">
     <h2>Leadership Radar Self-Assessment</h2>
   </header>
 
@@ -62,6 +67,17 @@
       "Learning Agility", "Integrity"
     ];
 
+    const descriptions = [
+      "Understands own strengths, triggers, and blind spots.",
+      "Manages stress and rebounds from setbacks effectively.",
+      "Demonstrates prioritization, organization, and follow-through.",
+      "Communicates clearly, listens well, and navigates conflict.",
+      "Understands and considers others' emotions and perspectives.",
+      "Inspires and aligns others without relying on authority.",
+      "Adapts quickly and learns from experiences.",
+      "Acts consistently with values; builds trust through honesty."
+    ];
+
     const slidersDiv = document.getElementById('sliders');
     const scores = Array(traits.length).fill(3);
 
@@ -70,6 +86,7 @@
       group.className = 'slider-group';
       group.innerHTML = `
         <label>${trait}: <span id="label-${index}">${scores[index]}</span></label><br>
+        <div class="description">${descriptions[index]}</div>
         <input type="range" min="1" max="5" value="3" step="1" 
                oninput="updateScore(${index}, this.value)" />
       `;
