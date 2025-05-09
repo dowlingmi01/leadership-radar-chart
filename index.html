@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Collective Rise | Leadership Radar</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F0F2EB;
+      color: #333333;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    header img {
+      height: 60px;
+      margin-right: 15px;
+    }
+    h2 {
+      color: #0AB0BD;
+    }
+    canvas {
+      max-width: 600px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+    }
+    .slider-group {
+      margin-bottom: 10px;
+    }
+    label {
+      color: #333333;
+      font-weight: bold;
+    }
+    input[type=range] {
+      width: 100%;
+      accent-color: #0AB0BD;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="	https://dowpig440.wordpress.com/wp-content/uploads/2025/04/workinglogo3.png?w=1024" alt="The Collective Rise Logo">
+    <h2>Leadership Radar Self-Assessment</h2>
+  </header>
+
+  <p>Rate yourself from 1 (low) to 5 (high) on each leadership trait. Your profile will update in real time.</p>
+  <div id="sliders"></div>
+  <canvas id="radarChart"></canvas>
+
+  <script>
+    const traits = [
+      "Self-Awareness", "Resilience", "Executive Functioning",
+      "Communication", "Empathy", "Influence",
+      "Learning Agility", "Integrity"
+    ];
+
+    const slidersDiv = document.getElementById('sliders');
+    const scores = Array(traits.length).fill(3);
+
+    traits.forEach((trait, index) => {
+      const group = document.createElement('div');
+      group.className = 'slider-group';
+      group.innerHTML = `
+        <label>${trait}: <span id="label-${index}">${scores[index]}</span></label><br>
+        <input type="range" min="1" max="5" value="3" step="1" 
+               oninput="updateScore(${index}, this.value)" />
+      `;
+      slidersDiv.appendChild(group);
+    });
+
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: traits,
+        datasets: [{
+          label: 'Your Leadership Profile',
+          data: scores,
+          fill: true,
+          backgroundColor: 'rgba(10, 176, 189, 0.2)',
+          borderColor: 'rgba(10, 176, 189, 1)',
+          pointBackgroundColor: 'rgba(10, 176, 189, 1)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          r: {
+            suggestedMin: 1,
+            suggestedMax: 5,
+            ticks: {
+              stepSize: 1
+            },
+            pointLabels: {
+              color: '#333333',
+              font: {
+                size: 12
+              }
+            },
+            grid: {
+              color: '#A89C94'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#333333'
+            }
+          }
+        }
+      }
+    });
+
+    function updateScore(index, value) {
+      scores[index] = Number(value);
+      document.getElementById(`label-${index}`).innerText = value;
+      chart.data.datasets[0].data = scores;
+      chart.update();
+    }
+  </script>
+</body>
+</html>
