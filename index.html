@@ -155,7 +155,7 @@
     
       console.log('Sending payload:', payload);  // Debug
     
-      fetch('https://681faf83941c4cce28ef4eca--cozy-moonbeam-244245.netlify.app', {
+      fetch('https://cozy-moonbeam-244245.netlify.app/.netlify/functions/submit', {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
