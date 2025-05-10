@@ -85,7 +85,7 @@
 
   <div id="page3" class="page">
     <div id="group3"></div>
-    <button class="nav-button" onclick="nextPage(3)">Submit</button>
+   <button class="nav-button" onclick="sendToGoogleSheet(); nextPage(3)">Submit</button>
   </div>
 
   <div id="page4" class="page">
@@ -143,6 +143,21 @@
       const next = current + 1;
       document.getElementById(`page${next}`).classList.add('active');
       if (next === 4) showChart();
+    }
+    function sendToGoogleSheet() {
+      const name = document.getElementById('evaluatee').value;
+      fetch('https://script.google.com/macros/s/AKfycby_lgKz6qCdXn2HApjddSzsfGswnnvPgEGIgOAdG09dWLDEzeT70XZdr13RlMGB0_lT/exec', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: name,
+          scores: scores
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => console.log('Submitted:', res))
+      .catch(err => console.error('Submission error:', err));
     }
 
     function showChart() {
